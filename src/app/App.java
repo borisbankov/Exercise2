@@ -1,15 +1,25 @@
 package app;
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
 
 public class App extends javax.swing.JFrame {
     
     public boolean moved = false;
     public int counter = 0;
+    public JButton btn = new JButton();
+    public ArrayList<JLabel> arrL = new ArrayList<JLabel>();
     public App() {
         
         initComponents();
         jTextField1.setText("Boris");        
         jTextField2.setText("Bankov");
-
+        
+        btn.setSize(200, 20);
+        btn.setText("New Button");
+        jPanel1.add(btn);
+        btn.setLocation(jPanel1.getWidth()/2 - btn.getWidth()/2, 
+                        jPanel1.getHeight()/2 - btn.getHeight()/2);
     }
 
     @SuppressWarnings("unchecked")
@@ -23,14 +33,21 @@ public class App extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
         jPanel1.setLayout(null);
         jPanel1.add(jTextField1);
         jTextField1.setBounds(27, 27, 149, 28);
         jPanel1.add(jTextField2);
-        jTextField2.setBounds(27, 67, 149, 31);
+        jTextField2.setBounds(30, 70, 149, 31);
 
         jButton1.setBackground(new java.awt.Color(204, 255, 204));
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -58,16 +75,29 @@ public class App extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(214, 33, 141, 16);
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 204));
+        jButton3.setBackground(new java.awt.Color(153, 102, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton3.setText("Move Label");
+        jButton3.setText("Create Label");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
         jPanel1.add(jButton3);
-        jButton3.setBounds(27, 216, 149, 32);
+        jButton3.setBounds(30, 320, 149, 32);
+        jPanel1.add(jTextField3);
+        jTextField3.setBounds(30, 270, 149, 31);
+
+        jButton4.setBackground(new java.awt.Color(255, 255, 204));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton4.setText("Move Label");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4);
+        jButton4.setBounds(27, 216, 149, 32);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +134,35 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int number = Integer.parseInt(jTextField3.getText());
+        for(int j = 0; j < arrL.size(); j++) {
+            jPanel1.remove(arrL.get(j));         
+        }
+        arrL.clear();
+        for (int i = 0; i < number; i++) {
+            JLabel label = new JLabel();
+            label.setText("Label " + (i + 1));
+            label.setSize(jPanel1.getWidth()/number - 10, 20);
+            jPanel1.add(label);
+            label.setLocation(0 + i*(label.getWidth() + 10), 
+                    jPanel1.getHeight() - label.getHeight());
+            label.setOpaque(true);
+            label.setBackground(Color.red);
+            arrL.add(label);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        btn.setLocation(jPanel1.getWidth()/2 - btn.getWidth()/2, 
+                        jPanel1.getHeight()/2 - btn.getHeight()/2);
+        for(int i = 0; i < arrL.size(); i++) {
+            arrL.get(i).setSize(jPanel1.getWidth()/arrL.size() - 10, 20);
+            arrL.get(i).setLocation(0 + i*(arrL.get(i).getWidth() + 10), 
+                    jPanel1.getHeight() - arrL.get(i).getHeight());
+        }
+    }//GEN-LAST:event_formComponentResized
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try{ 
             int x = Integer.parseInt(jTextField1.getText());
             int y = Integer.parseInt(jTextField2.getText());
@@ -124,7 +183,7 @@ public class App extends javax.swing.JFrame {
                     
                 }
             }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,9 +224,11 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
